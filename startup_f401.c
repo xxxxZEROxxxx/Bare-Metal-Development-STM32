@@ -1,28 +1,40 @@
 #include <stdint.h>
 typedef uint32_t u32;
 
-extern u32 _estack;
-extern u32 _sidata;
-extern u32 _sdata;
-extern u32 _edata;
-extern u32 _sbss;
-extern u32 _ebss;
+extern u32 _estack; //addr of end of stack
+extern u32 _etext;  //end of text in flash
+extern u32 _fsdata; //start of data in flash
+extern u32 _sdata;  //start of data in ram
+extern u32 _edata;  //end of data in ram
+extern u32 _sbss;   //start of bss in ram
+extern u32 _ebss;   //end of bss in ram
 
 int main(void);
+
+void Default_Handler(void);
+
 void Reset_Handler(void);
-void default_Handler(void);
-void NMI_Handler(void)__attribute__((weak, alias("default_Handler")));
-void HardFault_Handler(void)__attribute__((weak, alias("default_Handler")));
-void SVC_Handler(void)__attribute__((weak, alias("default_Handler")));
-void PendSV_Handler(void)__attribute__((weak, alias("default_Handler")));
-void SysTick_Handler(void)__attribute__((weak, alias("default_Handler")));
-void MemManage_Handler(void)__attribute__((weak, alias("default_Handler")));
-void BusFault_Handler(void)__attribute__((weak, alias("default_Handler")));
-void UsageFault_Handler(void)__attribute__((weak, alias("default_Handler")));
-void DebugMon_Handler(void)__attribute__((weak, alias("default_Handler")));
+
+void NMI_Handler(void)__attribute__((weak,alias("Default_Handler")));
+
+void HardFault_Handler(void)__attribute__((weak,alias("Default_Handler")));
+
+void MemManage_Handler(void)__attribute__((weak,alias("Default_Handler")));
+
+void BusFault_Handler(void)__attribute__((weak,alias("Default_Handler")));
+
+void UsageFault_Handler(void)__attribute__((weak,alias("Default_Handler")));
+
+void SVC_Handler(void)__attribute__((weak,alias("Default_Handler")));
+
+void DebugMon_Handler(void)__attribute__((weak,alias("Default_Handler")));
+
+void PendSV_Handler(void)__attribute__((weak,alias("Default_Handler")));
+
+void SysTick_Handler(void)__attribute__((weak,alias("Default_Handler")));
 
 
-const u32 vector_table[]__attribute__((section(".isr_vector"))) = {
+const u32 vct[]__attribute__((section(".vector"))) = {
     (u32)&_estack,
     (u32)&Reset_Handler,
     (u32)&NMI_Handler,
@@ -30,34 +42,35 @@ const u32 vector_table[]__attribute__((section(".isr_vector"))) = {
     (u32)&MemManage_Handler,
     (u32)&BusFault_Handler,
     (u32)&UsageFault_Handler,
-    (u32)0x00,
-    (u32)0x00,
-    (u32)0x00,
-    (u32)0x00,
+    0,
+    0,
+    0,
+    0,
     (u32)&SVC_Handler,
     (u32)&DebugMon_Handler,
-    (u32)0x00,
+    0,
     (u32)&PendSV_Handler,
     (u32)&SysTick_Handler
 };
 
+void Default_Handler(void){while (1){}};
 
-void default_Handler(void) {while(1){}}
-
-void Reset_Handler(void){
-    u32 len = ((u32)&_edata - (u32)&_sdata) / sizeof(u32);
-    u32 * flash = (u32 *)&_sidata;
-    u32 * ram = (u32 *)&_sdata;
-
-    for(u32 i=0;i<len;i++) {
-        *(ram++) = *(flash++);
+void Reset_Handler(void) {
+    u32 * fsdata = &_fsdata; //start of data in flash
+    u32 * rsdata = &_sdata;  //start of data in ram
+    while (rsdata < &_edata ) {
+        *(rsdata++) = *(fsdata++);
     }
 
-    u32 bss_size = ((u32)&_ebss - (u32)&_sbss) / sizeof(u32);
-    u32 * bss_v = (u32 *)&_sbss;
-    for (u32 i=0;i<bss_size;i++) {
-        *(bss_v++) = 0;
+    u32 * ram_bss_start = &_sbss;
+    u32 * ram_bss_end = &_ebss;
+
+    while ((int)ram_bss_start < (int)ram_bss_end ) {
+        *(ram_bss_start++) = 0x00;
     }
 
     main();
 }
+
+
+

@@ -2,8 +2,8 @@ ENTRY(Reset_Handler)
 
 MEMORY
 {
+    FLASH(rx) : ORIGIN = 0x08000000, LENGTH = 256K
     RAM(rwx) : ORIGIN = 0x20000000, LENGTH = 64K
-    FLASH(rx) : ORIGIN = 0X08000000, LENGTH = 256K
 }
 
 _estack = ORIGIN(RAM) + LENGTH(RAM);
@@ -12,12 +12,12 @@ _max_stack_size = 0x400;
 
 SECTIONS
 {
-    .isr_vector :
+    .vector :
     {
         . = ALIGN(4);
-        KEEP(*(.isr_vector)) /* Startup code */
+        KEEP(*(.vector));
         . = ALIGN(4);
-    } >FLASH
+    } > FLASH
 
     .text :
     {
@@ -28,9 +28,9 @@ SECTIONS
         *(.stack)
         . = ALIGN(4);
         _etext = .;
-    } >FLASH
+    } > FLASH
 
-    _sidata = LOADADDR(.data);
+    _fsdata = LOADADDR(.data);
 
     .data :
     {
@@ -39,7 +39,7 @@ SECTIONS
         *(.data)
         . = ALIGN(4);
         _edata = .;
-    } >RAM AT> FLASH
+    } > RAM AT> FLASH
 
     .bss :
     {
@@ -48,7 +48,6 @@ SECTIONS
         *(.bss)
         . = ALIGN(4);
         _ebss = .;
-    } >RAM
-
+    } > RAM
 
 }

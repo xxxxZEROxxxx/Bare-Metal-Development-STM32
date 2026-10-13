@@ -1,6 +1,6 @@
 # From HAL to Bare Metal and FreeRTOS: 60-Day Study Plan
 
-**For Akary · 60 sessions × 4 hours = 240 hours · 5 sessions/week × 12 weeks**
+**60 sessions × 4 hours = 240 hours · 5 sessions/week × 12 weeks**
 
 Prepared 26 September 2026. Sessions are numbered study days, not consecutive calendar days. Take two days off each week; no required weekend homework.
 
