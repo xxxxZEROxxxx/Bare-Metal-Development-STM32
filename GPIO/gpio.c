@@ -26,3 +26,6 @@ void gpio_set(GPIO_TypeDef * port, uint32_t number, bool state) {
 bool gpio_read(GPIO_TypeDef * port, uint32_t number) {
     return (bool)((port->IDR) >> number & 0x01);
 }
+void gpio_toggle(GPIO_TypeDef * port, uint32_t number) {
+    port-> ODR ^= (1 << number);
+}

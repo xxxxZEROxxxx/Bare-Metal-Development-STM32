@@ -8,9 +8,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define __I  uint32_t volatile const
-#define __O  uint32_t volatile
-#define __IO uint32_t volatile
 
 /** definition of Cortex-M4 internal Peripheral register*/
 #define SYS_BASE 0xE0000000

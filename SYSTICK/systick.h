@@ -5,6 +5,11 @@
 #ifndef FLASH_PROGRAMMER_SYSTICK_H
 #define FLASH_PROGRAMMER_SYSTICK_H
 
+#define __I  uint32_t volatile const
+#define __O  uint32_t volatile
+#define __IO uint32_t volatile
+
+
 #include "../main.h"
 
 #define TICK_ENA    (1UL)
