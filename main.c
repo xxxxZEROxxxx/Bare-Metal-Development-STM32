@@ -1,9 +1,11 @@
 #include "GPIO/gpio.h"
+#include <stdio.h>
 #include "main.h"
 #include "SYSTICK/systick.h"
 //#include "stm32f4xx.h"
 #include "EXTI/exti.h"
 #include "TIM & PWM/timer.h"
+#include "UART/uart.h"
 
 struct this{
     volatile int a;
@@ -34,13 +36,10 @@ volatile int end;
 volatile int gap;
 
 int main(void) {
-    //breath_light();
-    DWT_Init();
-    exti_init();
+    init_uart();
     while (1) {
         delay(1000);
-        start = DWT->CYCCNT;
-        EXTI->SWIER = 1UL;
+        printf("P");
     }
 }
 
