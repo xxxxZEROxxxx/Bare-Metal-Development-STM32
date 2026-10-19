@@ -15,23 +15,15 @@ void Default_Handler(void);
 
 void Reset_Handler(void);
 
-void NMI_Handler(void)__attribute__((weak,alias("Default_Handler")));
-
-void HardFault_Handler(void)__attribute__((weak,alias("Default_Handler")));
-
-void MemManage_Handler(void)__attribute__((weak,alias("Default_Handler")));
-
-void BusFault_Handler(void)__attribute__((weak,alias("Default_Handler")));
-
-void UsageFault_Handler(void)__attribute__((weak,alias("Default_Handler")));
-
-void SVC_Handler(void)__attribute__((weak,alias("Default_Handler")));
-
-void DebugMon_Handler(void)__attribute__((weak,alias("Default_Handler")));
-
-void PendSV_Handler(void)__attribute__((weak,alias("Default_Handler")));
-
-void SysTick_Handler(void)__attribute__((weak,alias("Default_Handler")));
+void NMI_Handler(void);
+void HardFault_Handler(void);
+void MemManage_Handler(void);
+void BusFault_Handler(void);
+void UsageFault_Handler(void);
+void SVC_Handler(void);
+void DebugMon_Handler(void);
+void PendSV_Handler(void);
+void SysTick_Handler(void);
 
 #define WEAK_DEFAULT_HANDLER(name) void name(void)__attribute__((weak,alias("Default_Handler")))
 
@@ -199,7 +191,17 @@ const u32 vct[]__attribute__((section(".vector"))) = {
     (u32)&SPI4_IRQHandler
 };
 
-void Default_Handler(void){while (1){}};
+void NMI_Handler(void) { while(1); }
+void HardFault_Handler(void) { while(1); }
+void MemManage_Handler(void) { while(1); }
+void BusFault_Handler(void) { while(1); }
+void UsageFault_Handler(void) { while(1); }
+void SVC_Handler(void) { while(1); }
+void DebugMon_Handler(void) { while(1); }
+void PendSV_Handler(void) { while(1); }
+void SysTick_Handler(void) { while(1); }
+
+void Default_Handler(void) { while(1); }
 
 void Reset_Handler(void) {
     u32 * fsdata = &_fsdata; //start of data in flash

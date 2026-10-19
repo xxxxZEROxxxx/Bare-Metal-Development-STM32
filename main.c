@@ -36,10 +36,16 @@ volatile int end;
 volatile int gap;
 
 int main(void) {
+    // Enable specific fault handlers (BusFault, UsageFault, MemManage)
+    // to prevent escalation to HardFault
+    SCB->SHCSR |= (1 << 16) | (1 << 17) | (1 << 18);
+
+    //setvbuf(stdout, NULL, _IONBF, 0);
     init_uart();
     while (1) {
         delay(1000);
-        printf("P");
+        uart_write('T'); // Hardware direct test
+        printf("P\n");   // Retargeting test
     }
 }
 

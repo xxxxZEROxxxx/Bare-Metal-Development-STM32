@@ -14,8 +14,6 @@
 void init_uart(void) {
     gpio_init(GPIOA, 2, AF);
     gpio_init(GPIOA, 3, AF);
-    // CONFIGURE AF TO MATCH UART
-    GPIOA->AFR[0] |= (0b01110111 << 8);
 
     // ENABLE CLOCK ACCESS FOR UART2
     RCC->APB1ENR |= APB1_EN_UART2;
@@ -49,4 +47,11 @@ int __io_putchar(int ch)
     return ch;
 }
 
-// THE FIX FOR PRINTF
+int _write(int file, char *ptr, int len)
+{
+    int i;
+    for (i = 0; i < len; i++) {
+        uart_write(ptr[i]);
+    }
+    return len;
+}

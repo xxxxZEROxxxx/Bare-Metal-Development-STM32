@@ -8,7 +8,7 @@
 
 void gpio_init(GPIO_TypeDef * port, uint32_t number, MODER_TypeDef moder) {
     uint32_t offset = ((uintptr_t)port - (uintptr_t)GPIOA_BASE)/0x400;
-    RCC_AHB1ENR |= (1 << offset);
+    RCC->AHB1ENR |= (1 << offset);
 
     port->MODER &= ~(0x03 << (number * 2));
     port->MODER |= (moder << (number * 2));
