@@ -44,7 +44,7 @@ set(MCU_FLAGS
 )
 
 add_executable(${PROJECT_NAME}
-    startup_f401.c
+    startup_stm32f401xc.s
     main.c
         GPIO/gpio.c
         GPIO/gpio.h
@@ -69,7 +69,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 
 target_link_options(${PROJECT_NAME} PRIVATE
     ${MCU_FLAGS}
-    -T${CMAKE_SOURCE_DIR}/startup_f401.ld
+    -T${CMAKE_SOURCE_DIR}/STM32F401XX_FLASH.ld
     -nostartfiles
     --specs=nosys.specs
     -Wl,-Map=${PROJECT_NAME}.map
