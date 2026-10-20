@@ -31,7 +31,7 @@ void DWT_Init(void) {
     DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 }
 
-volatile int start;
+volatile int start = 10302;
 volatile int end;
 volatile int gap;
 
@@ -39,11 +39,11 @@ int main(void) {
     // Enable specific fault handlers (BusFault, UsageFault, MemManage)
     // to prevent escalation to HardFault
     //SCB->SHCSR |= (1 << 16) | (1 << 17) | (1 << 18);
-    init_uart();
+    //init_uart();
+    repeater();
     while (1) {
+        print("start\n"); // Hardware direct test
         delay(1000);
-        uart_write(72); // Hardware direct test
-        //printf("P\n");   // Retargeting test
     }
 }
 
