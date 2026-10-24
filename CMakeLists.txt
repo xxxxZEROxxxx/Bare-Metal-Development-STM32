@@ -57,6 +57,8 @@ add_executable(${PROJECT_NAME}
         EXTI/exti.h
         UART/uart.c
         UART/uart.h
+        ADC/adc.c
+        ADC/adc.h
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE

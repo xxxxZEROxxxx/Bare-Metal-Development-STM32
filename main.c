@@ -6,6 +6,7 @@
 #include "EXTI/exti.h"
 #include "TIM & PWM/timer.h"
 #include "UART/uart.h"
+#include "ADC/adc.h"
 
 struct this{
     volatile int a;
@@ -30,20 +31,34 @@ void DWT_Init(void) {
     // 4. Enable the cycle counter inside the DWT control register
     DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 }
+void fpu_init(void)
+{
+    SCB->CPACR |= (0xFUL << 20);  // Enable CP10 and CP11
+    __DSB();
+    __ISB();
+}
 
 volatile int start = 10302;
 volatile int end;
 volatile int gap;
+float decimal;
 
 int main(void) {
     // Enable specific fault handlers (BusFault, UsageFault, MemManage)
     // to prevent escalation to HardFault
-    //SCB->SHCSR |= (1 << 16) | (1 << 17) | (1 << 18);
-    //init_uart();
-    repeater();
+    SCB->SHCSR |= (1 << 16) | (1 << 17) | (1 << 18);
+    init_uart();
+    //repeater();
+    fpu_init();
+    adc_init();
+    print("start\n"); // Hardware direct test
+    char voltage_buffer[15] = {};
+
     while (1) {
-        print("start\n"); // Hardware direct test
-        delay(1000);
+        decimal = adc_sample();
+        snprintf(voltage_buffer, sizeof(voltage_buffer), "%.2f V\n", decimal);
+        print(voltage_buffer);
+        delay(100);
     }
 }
 
