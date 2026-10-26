@@ -26,7 +26,29 @@ void adc_init(void) {
     ADC1->CR2 |= ADON; // TURN ON ADC
 }
 ```
+example use
+```c++
 
+int main(void) {
+    // Enable specific fault handlers (BusFault, UsageFault, MemManage)
+    // to prevent escalation to HardFault
+    SCB->SHCSR |= (1 << 16) | (1 << 17) | (1 << 18);
+    init_uart();
+    //repeater();
+    fpu_enable();
+    adc_init();
+    print("start\n"); // Hardware direct test
+    char voltage_buffer[15] = {};
+
+    while (1) {
+        decimal = adc_sample();
+        snprintf(voltage_buffer, sizeof(voltage_buffer), "%.2f V\n", decimal);
+        print(voltage_buffer);
+        delay(100);
+    }
+}
+
+```
 
 ## ADC Modes
 | MODE                  | Function                                                                                                                                                                                     | Set                                                                                                                                                                                                                          |

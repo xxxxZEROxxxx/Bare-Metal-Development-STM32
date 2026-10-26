@@ -7,6 +7,7 @@
 #include "TIM & PWM/timer.h"
 #include "UART/uart.h"
 #include "ADC/adc.h"
+#include "SPI/spi.h"
 
 struct this{
     volatile int a;
@@ -14,6 +15,10 @@ struct this{
 };
 struct this that = {0,0};
 #include "main.h" // Ensures correct CMSIS core headers are included
+
+const uint8_t spi_data[] = {
+    0xFF, 0x08, 0x04, 0xCB
+};
 
 void DWT_Init(void) {
     // 1. Enable the trace and debug block (DEMCR register)
@@ -31,7 +36,7 @@ void DWT_Init(void) {
     // 4. Enable the cycle counter inside the DWT control register
     DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 }
-void fpu_init(void)
+void fpu_enable(void)
 {
     SCB->CPACR |= (0xFUL << 20);  // Enable CP10 and CP11
     __DSB();
@@ -47,20 +52,26 @@ int main(void) {
     // Enable specific fault handlers (BusFault, UsageFault, MemManage)
     // to prevent escalation to HardFault
     SCB->SHCSR |= (1 << 16) | (1 << 17) | (1 << 18);
-    init_uart();
+
+    gpio_init(GPIOA, 0, INPUT);
+    //configure a pullup on PA0
+    GPIOA -> PUPDR |= (1UL << 0);
+    spi_init();
+    //init_uart();
     //repeater();
-    fpu_init();
-    adc_init();
-    print("start\n"); // Hardware direct test
-    char voltage_buffer[15] = {};
+    //fpu_enable();
+    //adc_init();
+    //print("start\n"); // Hardware direct test
 
     while (1) {
-        decimal = adc_sample();
-        snprintf(voltage_buffer, sizeof(voltage_buffer), "%.2f V\n", decimal);
-        print(voltage_buffer);
-        delay(100);
+       delay(400);
+       spi_transmit(spi_data, sizeof(spi_data));
+
     }
 }
+
+
+
 
 void EXTI0_IRQHandler(void) {
     if (EXTI -> PR & EXTI0) {
@@ -70,4 +81,3 @@ void EXTI0_IRQHandler(void) {
     end = DWT->CYCCNT;
     gap = end - start;
 }
-

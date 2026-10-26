@@ -59,6 +59,10 @@ add_executable(${PROJECT_NAME}
         UART/uart.h
         ADC/adc.c
         ADC/adc.h
+        SPI/spi.c
+        SPI/spi.h
+        BMP280/bmp280.c
+        BMP280/bmp280.h
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
