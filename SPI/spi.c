@@ -49,7 +49,7 @@ void spi_init(void) {
     SPI1->CR1 |= SPI_MSTR;
 
     //SET CLOCK POLARITY ADN PHASE
-    SPI1->CR1 |= (0b10UL << 0);
+    SPI1->CR1 |= (0b10UL << 0); // SPI mode 3 (BMP280 supports modes 0 and 3).
 
     // Use software NSS management and keep the internal NSS signal high.
     // Without this, a floating/low hardware NSS input can set MODF and
@@ -79,7 +79,6 @@ void spi_transmit(const uint8_t *data, uint32_t length) {
     while (SPI1->SR & SR_BSY) {
     }
 }
-
 
 
 

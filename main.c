@@ -1,5 +1,4 @@
 #include "GPIO/gpio.h"
-#include <stdio.h>
 #include "main.h"
 #include "SYSTICK/systick.h"
 //#include "stm32f4xx.h"
@@ -8,6 +7,7 @@
 #include "UART/uart.h"
 #include "ADC/adc.h"
 #include "SPI/spi.h"
+#include "BMP280/bmp280.h"
 
 struct this{
     volatile int a;
@@ -36,6 +36,7 @@ void DWT_Init(void) {
     // 4. Enable the cycle counter inside the DWT control register
     DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 }
+
 void fpu_enable(void)
 {
     SCB->CPACR |= (0xFUL << 20);  // Enable CP10 and CP11
@@ -48,6 +49,7 @@ volatile int end;
 volatile int gap;
 float decimal;
 
+
 int main(void) {
     // Enable specific fault handlers (BusFault, UsageFault, MemManage)
     // to prevent escalation to HardFault
@@ -56,16 +58,13 @@ int main(void) {
     gpio_init(GPIOA, 0, INPUT);
     //configure a pullup on PA0
     GPIOA -> PUPDR |= (1UL << 0);
-    spi_init();
-    //init_uart();
-    //repeater();
     //fpu_enable();
+    spi_init();
+    init_uart();
+    //repeater();
     //adc_init();
-    //print("start\n"); // Hardware direct test
 
     while (1) {
-       delay(400);
-       spi_transmit(spi_data, sizeof(spi_data));
 
     }
 }

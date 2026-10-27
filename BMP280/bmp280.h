@@ -19,7 +19,7 @@
 ///   011 : x4                18bit
 ///   100 : x8                19bit
 ///   101,110,111 : x16       20bit
-#define BMP_CTRL 0b00101011 // 1 x temp, 2 x pressure
+#define BMP_CTRL 0b00100111 // 1 x temp, 1 x pressure
 ///         [7:5]         [4:2]      [1]     [0]
 ///      time_interval    filter     N     SPI3_EN
 ///
@@ -42,13 +42,19 @@
 
 
 
+typedef enum {
+    Temperature = 0,
+    Pressure = 1,
+}BMP_ReadType;
 
 
 
 
 
-
-void bmp_get(void);
+// Temperature is returned in 0.01 degC; pressure is returned in Pa.
+int32_t bmp_get(BMP_ReadType);
+BMP280_S32_t bmp280_compensate_T_int32(BMP280_S32_t adc_T);
+BMP280_U32_t bmp280_compensate_P_int32(BMP280_S32_t adc_P);
 void bmp_write(uint8_t addr, uint8_t data);
 uint8_t bmp_read(uint8_t addr);
 void bmp_init(void);
