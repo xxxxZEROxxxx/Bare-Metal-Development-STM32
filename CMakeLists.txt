@@ -63,6 +63,8 @@ add_executable(${PROJECT_NAME}
         SPI/spi.h
         BMP280/bmp280.c
         BMP280/bmp280.h
+        I2C/i2c.c
+        I2C/i2c.h
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE

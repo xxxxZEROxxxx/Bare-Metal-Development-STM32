@@ -112,7 +112,7 @@ int32_t bmp_get(BMP_ReadType e) {
 }
 
 //////////        APPLICATION FUNCTION        ///////////
-
+/*
 static void uart_print_uint(uint32_t value) {
     char digits[10];
     unsigned int count = 0;
@@ -152,7 +152,7 @@ void bmp_print(void) {
     delay(140);
 }
 
-
+*/
 //////////        DATA CONVERSION      ////////////
 
 BMP280_S32_t t_fine = 0;
