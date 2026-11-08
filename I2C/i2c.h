@@ -5,13 +5,14 @@
 #ifndef FLASH_PROGRAMMER_I2C_H
 #define FLASH_PROGRAMMER_I2C_H
 
-#define  I2C1EN          (1UL << 22) // enable on RCC
+#define  I2C2EN          (1UL << 22) // enable on RCC
 
 #define  I2C_SWRST       (1UL << 15) // SOFTWARE RESET
 #define  I2C_EN_ACK      (1UL << 10) // ENABLE ACK
 #define  I2C_START       (1UL << 8) // USED IN GENERATE START IN CR1
 #define  I2C_STOP        (1UL << 9) // USED TO GENERATE STOP IN CR1
 #define  I2C_EN          (1UL) // USED IN CR1 TO ENABLE I2C PERIPHERAL
+#define  I2C_POS         (1UL << 11) // in CR1 POS to control the byte to ack or nack
 
 #define  I2C_FREQ        16 // IN CR2, USED TO SET THE PERIPHERAL CLOCK FREQUENCY
 
