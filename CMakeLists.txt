@@ -65,6 +65,8 @@ add_executable(${PROJECT_NAME}
         BMP280/bmp280.h
         I2C/i2c.c
         I2C/i2c.h
+        MPU6500/mpu6500_i2c.c
+        MPU6500/mpu6500_i2c.h
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE

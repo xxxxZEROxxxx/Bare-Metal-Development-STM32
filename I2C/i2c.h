@@ -5,7 +5,7 @@
 #ifndef FLASH_PROGRAMMER_I2C_H
 #define FLASH_PROGRAMMER_I2C_H
 
-#define  I2C2EN          (1UL << 22) // enable on RCC
+#define  I2C1EN          (1UL << 21) // enable on RCC
 
 #define  I2C_SWRST       (1UL << 15) // SOFTWARE RESET
 #define  I2C_EN_ACK      (1UL << 10) // ENABLE ACK

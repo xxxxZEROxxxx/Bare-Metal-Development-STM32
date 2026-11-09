@@ -8,6 +8,8 @@
 #include "ADC/adc.h"
 #include "SPI/spi.h"
 #include "BMP280/bmp280.h"
+#include "MPU6500/mpu6500_i2c.h"
+#include "I2C/i2c.h"
 
 struct this{
     volatile int a;
@@ -48,7 +50,7 @@ volatile int start = 10302;
 volatile int end;
 volatile int gap;
 float decimal;
-
+uint8_t id;
 
 int main(void) {
     // Enable specific fault handlers (BusFault, UsageFault, MemManage)
@@ -63,12 +65,13 @@ int main(void) {
     init_uart();
     //repeater();
     //adc_init();
+    iic_init();
 
     while (1) {
-
+        id = iic_read(MPU_6500, 0x75);
+        delay(500);
     }
 }
-
 
 
 

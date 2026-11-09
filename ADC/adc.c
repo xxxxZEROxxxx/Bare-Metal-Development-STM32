@@ -30,6 +30,8 @@ void adc_init(void) {
     ADC1->CR2 |= ADON; // TURN ON ADC
 }
 
+DMA2_Stream0
+
 float adc_sample(void) {
     // 3.4V ave
     ADC1->CR2 |= SWSTART;

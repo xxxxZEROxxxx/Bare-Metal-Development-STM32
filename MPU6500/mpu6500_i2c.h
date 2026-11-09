@@ -1,0 +1,11 @@
+//
+// Created by Arcana on 8/11/26.
+//
+
+#ifndef FLASH_PROGRAMMER_MPU6500_I2C_H
+#define FLASH_PROGRAMMER_MPU6500_I2C_H
+
+#define MPU_6500 0b1101000
+
+
+#endif //FLASH_PROGRAMMER_MPU6500_I2C_H
