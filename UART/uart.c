@@ -27,12 +27,15 @@ void init_uart(void) {
     RCC->APB1ENR |= APB1_EN_UART2;
 
     // CONFIGURE BAUD RATE
-    uart_set_baudrate(16000000, 9600);
+    uart_set_baudrate(16000000, 57600);
 
     // CONFIGURE CR1
-    USART2->CR1 |= EN_TE | EN_UART2 | EN_RE;
+    USART2->CR1 |= EN_TE | EN_UART2;
 }
 
+void init_dma_uart(void) {
+    USART2->CR2 |= DMA_TX_EN;
+}
 
 void repeater(void) {
     gpio_init(GPIOA, 0, INPUT);

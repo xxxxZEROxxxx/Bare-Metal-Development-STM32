@@ -67,6 +67,10 @@ add_executable(${PROJECT_NAME}
         I2C/i2c.h
         MPU6500/mpu6500_i2c.c
         MPU6500/mpu6500_i2c.h
+        DMA/dma_adc.c
+        DMA/dma_adc.h
+        RTC/rtc.c
+        RTC/rtc.h
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE

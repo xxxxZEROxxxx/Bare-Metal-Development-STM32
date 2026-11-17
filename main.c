@@ -10,6 +10,8 @@
 #include "BMP280/bmp280.h"
 #include "MPU6500/mpu6500_i2c.h"
 #include "I2C/i2c.h"
+#include "DMA/dma_adc.h"
+#include "RTC/rtc.h"
 
 struct this{
     volatile int a;
@@ -61,15 +63,18 @@ int main(void) {
     //configure a pullup on PA0
     GPIOA -> PUPDR |= (1UL << 0);
     //fpu_enable();
-    spi_init();
-    init_uart();
+    //spi_init();
+    //init_uart();
     //repeater();
     //adc_init();
-    iic_init();
+    //iic_init();
+    //dma_adc_timer_init();
+    //dma_adc_timer_start();
+    rtc_test();
 
     while (1) {
-        id = iic_read(MPU_6500, 0x75);
-        delay(500);
+        //id = iic_read(MPU_6500, 0x75);
+        //delay(500);
     }
 }
 

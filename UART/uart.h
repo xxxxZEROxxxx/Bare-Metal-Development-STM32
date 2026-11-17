@@ -19,6 +19,8 @@
 #define RXNE          (1UL << 5) //REVEIVE NOT EMPTY
 #define IDLE          (1UL << 4) // IDLE STATE
 #define ORE           (1UL << 3) //OVER RUN
+#define DMA_TX_EN        (1UL << 7) // ENABLE DMA TX
+
 
 void init_uart(void);
 
@@ -26,5 +28,6 @@ static uint16_t compute_uart_bd(uint32_t periph_clk, uint32_t baudrate);
 static void uart_set_baudrate(uint32_t periph_clk, uint32_t baudrate);
 void uart_write(int data);
 void print(const char * data);
+void init_dma_uart(void);
 void repeater(void);
 #endif //FLASH_PROGRAMMER_UART_H
